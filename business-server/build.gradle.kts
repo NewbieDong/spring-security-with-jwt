@@ -12,6 +12,12 @@ repositories {
     mavenCentral()
 }
 
+configurations {
+    compileOnly {
+        extendsFrom(configurations.annotationProcessor.get())
+    }
+}
+
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-security")
@@ -22,6 +28,10 @@ dependencies {
     implementation("io.jsonwebtoken:jjwt-jackson:0.11.5")
     implementation("jakarta.xml.bind:jakarta.xml.bind-api:3.0.1")
     implementation("org.glassfish.jaxb:jaxb-runtime:3.0.1")
+
+
+    compileOnly("org.projectlombok:lombok")
+    annotationProcessor("org.projectlombok:lombok")
 
 }
 
