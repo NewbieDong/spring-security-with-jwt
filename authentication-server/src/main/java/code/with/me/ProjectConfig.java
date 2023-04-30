@@ -3,9 +3,12 @@ package code.with.me;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+
+import static org.springframework.security.config.Customizer.withDefaults;
 
 /**
  * @author andong@xiaomalixing.com
@@ -20,16 +23,17 @@ public class ProjectConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeRequests(authorizeRequests ->
+        return http.authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
                                 .anyRequest().permitAll()
                 )
+                .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(formLogin ->
                         formLogin
                                 .loginPage("/login")
                                 .permitAll()
                 )
-                .httpBasic();
-        return null;
+                .httpBasic(withDefaults())
+                .build();
     }
 }
