@@ -35,8 +35,6 @@ public class InitialAuthenticationFilter extends OncePerRequestFilter {
             Authentication a = new UsernamePasswordAuthentication(username, password);
             manager.authenticate(a);
         } else {
-            Authentication a = manager.authenticate(new OtpAuthentication(username, code));
-
             SecretKey key = Keys.hmacShaKeyFor(signingKey.getBytes(StandardCharsets.UTF_8));
 
             String jwt = Jwts.builder()
